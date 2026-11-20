@@ -3,41 +3,45 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NissanScan — Dashboard</title>
+  <title>openscan-obd</title>
   <style>
     :root {
       color-scheme: dark;
-      --bg: #15181c; --panel: #1d2227; --line: #2c343c; --ink: #e9edf0; --mute: #98a4ae;
+      --bg: #12151a; --panel: #1a1f25; --raise: #222931; --line: #29313a; --ink: #e8ecef; --mute: #8f9ba6;
       --live: #7fd1ee; --warn: #f2b134; --bad: #e0786a;
       font-family: Bahnschrift, "DIN Alternate", "Segoe UI", system-ui, sans-serif;
       background: var(--bg); color: var(--ink);
     }
     * { box-sizing: border-box; }
-    body { max-width: 1040px; margin: 0 auto; padding: 20px 20px 48px; font-variant-numeric: tabular-nums; }
-    h1 { margin: 0; font-size: 1.35rem; font-weight: 600; letter-spacing: .01em; }
-    h2.group { margin: 28px 0 6px; font-size: .95rem; font-weight: 600; color: var(--mute); }
-    header { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
-    #connection { color: var(--mute); font-size: .9rem; margin-top: 4px; }
-    #connection::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 8px; background: var(--warn); }
+    body { max-width: 1040px; margin: 0 auto; padding: 18px 20px 40px; font-variant-numeric: tabular-nums; }
+    h1 { margin: 0; font-size: 1.2rem; font-weight: 600; letter-spacing: .02em; }
+    h2.group { margin: 26px 0 4px; font-size: .8rem; font-weight: 600; color: var(--mute); letter-spacing: .06em; text-transform: uppercase; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+    .brand { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    #connection { color: var(--mute); font-size: .88rem; margin-top: 6px; }
+    #connection::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; background: var(--warn); }
     #connection[data-state="connected"]::before { background: var(--live); }
     #connection[data-state="error"] { color: var(--bad); }
     #connection[data-state="error"]::before { background: var(--bad); }
-    nav { display: flex; gap: 4px; flex-wrap: wrap; }
-    button { font: inherit; color: inherit; background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 8px 14px; cursor: pointer; }
-    button:hover { border-color: var(--mute); }
-    button[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); font-weight: 600; }
+    nav { display: flex; gap: 2px; background: var(--panel); border-radius: 10px; padding: 3px; }
+    button { font: inherit; color: inherit; background: transparent; border: 1px solid transparent; border-radius: 8px; padding: 7px 14px; cursor: pointer; }
+    nav button { color: var(--mute); }
+    nav button:hover { color: var(--ink); }
+    nav button[aria-selected="true"] { background: var(--raise); color: var(--ink); font-weight: 600; }
+    button.primary { background: var(--live); color: var(--bg); font-weight: 600; padding: 10px 22px; }
+    button.primary:hover { filter: brightness(1.08); }
     button:disabled { opacity: .5; cursor: default; }
     :focus-visible { outline: 3px solid var(--live); outline-offset: 2px; }
     [hidden] { display: none !important; }
-    main { margin-top: 12px; }
+    main { margin-top: 14px; }
 
-    .legend { margin: 0 0 10px; color: var(--mute); font-size: .85rem; line-height: 1.5; max-width: 78ch; }
-    .legend b { color: var(--ink); font-weight: 600; }
-    .notice { border-left: 3px solid var(--warn); background: var(--panel); padding: 10px 14px; color: var(--ink); max-width: 78ch; line-height: 1.5; }
-    #paused-banner { border-left: 3px solid var(--live); background: var(--panel); padding: 10px 14px; margin: 0 0 12px; }
+    .meta { color: var(--mute); font-size: .88rem; line-height: 1.5; max-width: 78ch; margin: 6px 0; }
+    .notice { border-left: 3px solid var(--warn); background: var(--panel); padding: 9px 14px; font-size: .9rem; line-height: 1.5; max-width: 78ch; border-radius: 0 8px 8px 0; }
+    #paused-banner { border-left: 3px solid var(--live); background: var(--panel); padding: 9px 14px; margin: 12px 0 0; border-radius: 0 8px 8px 0; }
+    #data-status { margin: 4px 0 0; font-size: .82rem; }
 
     /* Selo de confiança: forma + texto, nunca só cor */
-    .tier { margin-left: 10px; font-size: .78rem; font-weight: 400; color: var(--mute); white-space: nowrap; }
+    .tier { margin-left: 10px; font-size: .74rem; font-weight: 400; color: var(--mute); white-space: nowrap; }
     .tier::before { margin-right: 4px; }
     .tier[data-tier="padrao"]::before { content: "\25CF"; color: var(--ink); }
     .tier[data-tier="confirmado"]::before { content: "\25C6"; color: var(--live); }
@@ -49,57 +53,67 @@
     .tier[data-tier="indisponivel"] { color: var(--bad); }
 
     /* Destaque: RPM e velocidade */
-    .hero { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; }
-    .hero .card { background: var(--panel); border-radius: 10px; padding: 18px 20px 16px; }
-    .hero .value { display: block; font-size: clamp(3rem, 9vw, 5.5rem); line-height: 1; font-weight: 600; margin-top: 6px; }
-    .hero .unit { font-size: 1.1rem; font-weight: 400; }
-    .tach { height: 14px; margin-top: 14px; background: var(--line); border-radius: 2px;
+    .hero { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
+    .hero .card { background: var(--panel); border-radius: 12px; padding: 16px 20px 14px; min-height: 12rem; }
+    .hero .value { display: block; font-size: clamp(3rem, 9vw, 5.5rem); line-height: 1; font-weight: 600; margin-top: 6px; white-space: nowrap; }
+    .hero .unit { font-size: 1.05rem; }
+    .tach { height: 12px; margin-top: 14px; background: var(--line); border-radius: 2px;
             -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 10px, transparent 10px 13px);
             mask-image: repeating-linear-gradient(90deg, #000 0 10px, transparent 10px 13px); }
     #tach-fill { height: 100%; width: 0; background: var(--live); }
     @media (prefers-reduced-motion: no-preference) { #tach-fill { transition: width .25s linear; } }
-    .tach-scale { display: flex; justify-content: space-between; color: var(--mute); font-size: .75rem; margin-top: 4px; }
+    .tach-scale { display: flex; justify-content: space-between; color: var(--mute); font-size: .72rem; margin-top: 4px; }
 
     /* Valores secundários: linhas, não cartões */
-    .rows { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 32px; }
-    .rows .card { display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--line); }
-    .rows .label { color: var(--ink); }
-    .rows .value { font-size: 1.5rem; font-weight: 600; text-align: right; }
-    .rows .why { grid-column: 1 / -1; }
-    .label { color: var(--mute); }
-    .unit { font-size: .9rem; color: var(--mute); font-weight: 400; }
-    .why { display: block; margin-top: 4px; font-size: .8rem; color: var(--mute); min-height: 1.3em; }
-    .hero .value { white-space: nowrap; }
-    .hero .card { min-height: 12.5rem; }
+    .rows, .cvt-grid { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 36px; }
+    .rows .card, .cvt-grid .card { display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--line); }
+    .rows .value, .cvt-grid .value { font-size: 1.4rem; font-weight: 600; text-align: right; }
+    .rows .why, .cvt-grid .why { grid-column: 1 / -1; }
+    .label { color: var(--ink); }
+    .unit { font-size: .85rem; color: var(--mute); font-weight: 400; }
+    .why { display: block; margin-top: 2px; font-size: .74rem; color: var(--mute); }
+    .hero .label { color: var(--mute); }
     .card.stale { opacity: .4; }
 
     /* CVT */
-    .gate { display: flex; gap: 8px; margin: 14px 0 6px; }
-    .gate span { width: 56px; height: 64px; display: grid; place-items: center; font-size: 2rem; font-weight: 600; border: 1px solid var(--line); border-radius: 8px; color: var(--mute); }
+    .gate { display: flex; gap: 8px; margin: 14px 0 8px; }
+    .gate span { width: 56px; height: 64px; display: grid; place-items: center; font-size: 2rem; font-weight: 600; border: 1px solid var(--line); border-radius: 10px; color: var(--mute); }
     .gate span[aria-current="true"] { background: var(--live); color: var(--bg); border-color: var(--live); }
-    .cvt-grid { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 32px; margin-top: 10px; }
-    .cvt-grid .card { display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--line); }
-    .cvt-grid .value { font-size: 1.5rem; font-weight: 600; text-align: right; }
-    .cvt-grid .why { grid-column: 1 / -1; }
+    .no-tcm .gate, .no-tcm .cvt-grid, .no-tcm .pending { display: none; }
 
-    .meta { color: var(--mute); font-size: .9rem; max-width: 78ch; line-height: 1.5; }
-    pre { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--panel); padding: 12px; border-radius: 8px; }
-    #data-status { border-left: 3px solid var(--live); padding-left: 10px; }
-    #dtc-result { white-space: pre-wrap; line-height: 1.6; max-width: 78ch; }
-    #scan-summary dt { color: var(--mute); margin-top: 10px; }
-    #scan-summary dd { margin: 0; }
+    /* Falhas e scan */
+    #dtc-result { white-space: pre-wrap; line-height: 1.7; max-width: 78ch; }
+    .scan-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .scan-head h2 { margin: 0; font-size: 1.05rem; font-weight: 600; }
+    #scan-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin: 16px 0 0; }
+    #scan-summary .stat { background: var(--panel); border-radius: 12px; padding: 12px 16px; }
+    #scan-summary .wide { grid-column: 1 / -1; }
+    #scan-summary dt { color: var(--mute); font-size: .78rem; margin: 0 0 4px; }
+    #scan-summary dd { margin: 0; font-size: 1.05rem; font-weight: 600; overflow-wrap: anywhere; }
+    #scan-summary dd.warn { color: var(--warn); }
+    #scan-summary dd.small { font-size: .85rem; font-weight: 400; color: var(--mute); }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { background: var(--raise); border-radius: 999px; padding: 3px 12px; font-size: .88rem; font-weight: 400; }
+
+    /* Rodapé */
+    footer { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .legend { display: flex; gap: 6px 18px; flex-wrap: wrap; color: var(--mute); font-size: .8rem; }
+    .legend .tier { margin: 0; }
+    details { margin-top: 12px; color: var(--mute); font-size: .85rem; }
+    summary { cursor: pointer; width: fit-content; }
+    details p { margin: 8px 0; max-width: 78ch; line-height: 1.5; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--panel); padding: 12px; border-radius: 8px; margin: 6px 0; }
     @media (max-width: 720px) {
       .hero, .rows, .cvt-grid { grid-template-columns: 1fr; }
     }
-  .no-tcm .gate,.no-tcm .cvt-grid{display:none}
 </style>
 </head>
 <body>
   <header>
     <div>
-      <h1>NissanScan</h1>
-      <div class="meta" id="profile-line">Perfil: …</div>
+      <div class="brand"><h1>openscan-obd</h1><span class="meta" id="profile-line">Perfil: …</span></div>
       <div id="connection" role="status" aria-live="polite" data-state="waiting">Conectando ao servidor local…</div>
+      <p id="data-status" class="meta" role="status" aria-live="polite">Aguardando dados do gateway.</p>
     </div>
     <nav aria-label="Telas do dashboard">
       <button type="button" data-tab="general" aria-selected="true">Geral</button>
@@ -109,10 +123,6 @@
     </nav>
   </header>
 
-  <p class="legend"><b>Como ler o selo de cada valor.</b> ● padrão: leitura OBD-II (SAE J1979).
-    ◆ confirmado: campo do CVT validado no veículo de teste (Sentra B16 2010).
-    ○ estimado: sem referência independente. ▪ cru: byte sem interpretação.
-    – indisponível: o ECM não fornece. Não vale para outros veículos.</p>
   <div id="paused-banner" role="status" hidden>Scan em andamento: leitura ao vivo pausada.</div>
 
   <main>
@@ -145,16 +155,11 @@
         <article class="card" id="card-vbat"><span class="label">Tensão do módulo<span class="tier" id="tier-vbat"></span></span><span class="value"><span id="vbat">—</span> <span class="unit">V</span></span><span class="why" id="why-vbat"></span></article>
         <article class="card" id="card-lambda"><span class="label">Lambda comandado<span class="tier" id="tier-lambda"></span></span><span class="value"><span id="lambda">—</span> <span class="unit">λ</span></span><span class="why" id="why-lambda"></span></article>
       </div>
-      <p class="meta" style="margin-top: 22px">Interpretação: <span id="verification">aguardando frame</span>. Atualizado: <span id="updated-at">—</span>.</p>
-      <p id="data-status" class="meta" role="status" aria-live="polite">Aguardando dados do gateway.</p>
-      <p class="label">Origem: <span id="source">aguardando frame</span>. Payload LID 0x01 (hex):</p>
-      <pre id="raw-payload">indisponível</pre>
     </section>
 
     <section id="panel-cvt" aria-label="Dashboard CVT" hidden>
-      <div class="notice" id="cvt-notice">Marcha e ré: confirmados no veículo de teste. Temperatura ATF: estimada
-        pela tabela do manual (sem referência independente). Lock-up: byte cru. Relação e pressão
-        de linha seguem sem decodificação validada e não são simuladas.</div>
+      <div class="notice" id="cvt-notice">Marcha, ré e RPM do câmbio: confirmados. ATF: estimado pela tabela do manual.
+        Lock-up: byte cru.</div>
       <p class="meta" id="tcm-status" role="status">TCM: aguardando.</p>
       <div class="gate" id="gate" role="img" aria-label="Posição da alavanca"><span data-g="P">P</span><span data-g="R">R</span><span data-g="N">N</span><span data-g="D">D</span></div>
       <div class="cvt-grid">
@@ -164,26 +169,43 @@
         <article class="card" id="cvt-vsp_tcm"><span class="label">Velocidade (lida no TCM)<span class="tier" id="tier-cvt-vsp_tcm"></span></span><span class="value"><span id="cvt-vsp_tcm-value">—</span> <span class="unit">km/h</span></span><span class="why" id="why-cvt-vsp_tcm"></span></article>
         <article class="card" id="cvt-atf"><span class="label">Temperatura ATF<span class="tier" id="tier-cvt-atf"></span></span><span class="value"><span id="cvt-atf-value">—</span> <span class="unit">°C</span></span><span class="why" id="why-cvt-atf"></span></article>
         <article class="card" id="cvt-lockup_b38"><span class="label">Lock-up (byte [38])<span class="tier" id="tier-cvt-lockup_b38"></span></span><span class="value"><span id="cvt-lockup_b38-value">—</span></span><span class="why" id="why-cvt-lockup_b38"></span></article>
-        <article class="card"><span class="label">Relação CVT</span><span class="value">Não validada</span></article>
-        <article class="card"><span class="label">Pressão de linha</span><span class="value">Não validada</span></article>
       </div>
+      <p class="meta pending">Relação do CVT e pressão de linha: ainda sem decodificação validada.</p>
     </section>
 
     <section id="panel-dtc" aria-label="Leitura de DTCs" hidden>
       <p id="dtc-result" role="status">Nenhum scan executado. Use a aba Scan para ler os códigos do motor.</p>
-      <p class="meta">Códigos do motor vêm do OBD-II (modos 03 e 07). A leitura de falhas do
-        câmbio ainda não foi validada neste veículo: ausência de resposta nunca significa "sem falhas".</p>
+      <p class="meta">Lista vazia nunca significa "sem falhas" no câmbio.</p>
     </section>
 
     <section id="panel-scan" aria-label="Scan do veículo" hidden>
-      <p class="meta">O scan é somente leitura e a leitura ao vivo pausa enquanto ele roda
-        (canal único do adaptador). Dura alguns segundos.</p>
-      <p><button type="button" id="scan-start">Iniciar scan</button></p>
+      <div class="scan-head">
+        <div>
+          <h2>Scan do veículo</h2>
+          <p class="meta">Só leitura. A leitura ao vivo pausa por alguns segundos.</p>
+        </div>
+        <button type="button" id="scan-start" class="primary">Iniciar scan</button>
+      </div>
       <p id="scan-status" class="meta" role="status">Nenhum scan executado nesta sessão.</p>
       <dl id="scan-summary"></dl>
-      <p class="meta">Resultado completo (cru e decodificado) fica salvo em <code>logs/scan_*.json</code>.</p>
     </section>
   </main>
+
+  <footer>
+    <div class="legend" aria-label="Legenda dos selos">
+      <span class="tier" data-tier="padrao" title="Leitura OBD-II padrão (SAE J1979)">padrão</span>
+      <span class="tier" data-tier="confirmado" title="Validado no veículo de teste (Sentra B16 2010); não vale para outros veículos">confirmado</span>
+      <span class="tier" data-tier="estimado" title="Sem referência independente">estimado</span>
+      <span class="tier" data-tier="cru" title="Byte sem interpretação">cru</span>
+      <span class="tier" data-tier="indisponivel" title="O módulo não fornece este valor">indisponível</span>
+    </div>
+    <details>
+      <summary>Detalhes técnicos</summary>
+      <p>Interpretação: <span id="verification">aguardando frame</span>. Atualizado: <span id="updated-at">—</span>.</p>
+      <p>Origem: <span id="source">aguardando frame</span>. Payload LID 0x01 (hex):</p>
+      <pre id="raw-payload">indisponível</pre>
+    </details>
+  </footer>
 
   <script>
     const byId = (id) => document.getElementById(id);
@@ -312,7 +334,7 @@
           ? `KWP indisponível; tentando recuperar automaticamente. ${detail}`
           : "Sem conexão KWP; aguardando recuperação automática.";
       } else if (data.data_available) {
-        dataStatus.textContent = "Dados ao vivo do ECM por OBD-II; o LID 0x01 do ECM é curto e fica só como payload cru.";
+        dataStatus.textContent = "Dados ao vivo do ECM por OBD-II.";
       } else if (!data.lid_available && data.lid_nrc) {
         dataStatus.textContent = `Sessão KWP ativa; o ECM recusou o LID 0x01 (NRC 0x${data.lid_nrc}).`;
       } else if (!data.lid_available) {
@@ -333,9 +355,9 @@
       const codes = (cvt && cvt.codes) || [];
       if (cvt && cvt.status === "hipotese_nao_validada" && codes.length) {
         return `Câmbio (CVT) · HIPÓTESE, não validada: ${codes.map((c) => c.code).join(", ")} ` +
-          "(lidos por KWP 17 FF 00; significado do status ainda desconhecido).";
+          "(KWP 17 FF 00).";
       }
-      return "Câmbio (CVT): leitura de falhas não validada neste veículo; sem resposta não significa \"sem falhas\".";
+      return "Câmbio (CVT): leitura de falhas não validada neste veículo.";
     }
 
     async function loadDtcs() {
@@ -351,13 +373,33 @@
       }
     }
 
-    function addRow(list, term, text) {
+    function addRow(list, term, content, cls) {
+      const box = document.createElement("div");
+      box.className = "stat" + (cls && cls.includes("wide") ? " wide" : "");
       const dt = document.createElement("dt");
       dt.textContent = term;
       const dd = document.createElement("dd");
-      dd.textContent = text;
-      list.append(dt, dd);
+      if (Array.isArray(content)) {
+        dd.className = "chips";
+        content.forEach((name) => {
+          const chip = document.createElement("span");
+          chip.className = "chip";
+          chip.textContent = name;
+          dd.append(chip);
+        });
+      } else {
+        dd.textContent = content;
+        if (cls) dd.className = cls.replace("wide", "").trim();
+      }
+      box.append(dt, dd);
+      list.append(box);
     }
+
+    const MODULE_NAME = { engine: "Motor (ECM)", tcm_cvt: "Câmbio (TCM)", eps: "Direção (EPS)",
+                          meter: "Painel", bcm: "Carroceria (BCM)", ipdm: "IPDM",
+                          abs_vdc: "ABS/VDC", airbag: "Airbag", hvac: "Ar-condicionado" };
+    const moduleName = (id) => MODULE_NAME[id]
+      ?? (/^unk_([0-9a-f]+)$/i.test(id) ? `Desconhecido (0x${id.slice(4).toUpperCase()})` : id);
 
     function renderScan(body) {
       const status = byId("scan-status");
@@ -371,15 +413,16 @@
         status.textContent = "Scan concluído.";
         const r = body.result, sum = r.summary, list = byId("scan-summary");
         list.replaceChildren();
-        addRow(list, `Módulos que responderam (perfil ${r.profile || "?"})`, sum.modules_present.join(", ") || "nenhum");
+        addRow(list, `Módulos que responderam · perfil ${r.profile || "?"}`,
+               sum.modules_present.length ? sum.modules_present.map(moduleName) : "nenhum", "wide");
         addRow(list, "PIDs OBD-II suportados pelo ECM", String(sum.ecm_pids_supported));
         addRow(list, "VIN", sum.vin === "nao_suportado" ? "não suportado por este ECM" : String(sum.vin));
         const l = (v) => (Array.isArray(v) ? (v.length ? v.join(", ") : "nenhum") : "sem leitura");
         addRow(list, "Falhas do motor", `confirmadas: ${l(sum.dtc_ecm.stored)}; pendentes: ${l(sum.dtc_ecm.pending)}`);
         if (sum.dtc_cvt !== "nao_aplicavel") addRow(list, "Falhas do CVT", sum.dtc_cvt === "hipotese_nao_validada" && sum.dtc_cvt_codes.length
           ? `hipótese, não validada: ${sum.dtc_cvt_codes.join(", ")}`
-          : "leitura não validada (não interpretar como \"sem falhas\")");
-        addRow(list, "Arquivo salvo", body.file);
+          : "leitura não validada (não interpretar como \"sem falhas\")", "warn");
+        addRow(list, "Arquivo salvo", body.file, "wide small");
       }
     }
 

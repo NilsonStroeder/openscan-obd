@@ -298,6 +298,7 @@ class BrowserInteractionTests(unittest.TestCase):
             self.page.locator("#connection").get_attribute("data-state"),
             "connected",
         )
+        self.page.get_by_text("Detalhes técnicos").click()
         self.assertEqual(self.page.locator("#raw-payload").inner_text(), "001b0000")
 
     def test_dashboard_shows_lid_nrc(self) -> None:
