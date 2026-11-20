@@ -18,6 +18,9 @@ pip install -r requirements.txt && pip install -e . pytest
 python -m pytest tests --ignore=tests/browser
 ```
 
+Testes de tela (opcional): `pip install -r requirements-browser.txt`, `python -m playwright install chromium`
+e `python -m pytest tests/browser`. Mudou o dashboard? Rode também esses.
+
 Escreva o teste antes (TDD), rode a suíte inteira e só então abra o PR. Textos e docs em português ou inglês.
 
 ## Enviando logs de outro carro

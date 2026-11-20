@@ -32,42 +32,65 @@ em **perfis de veículo**; o resto (transporte, guarda de segurança, dashboard)
 - Não é ferramenta de reflash. Use por sua conta e risco, no seu próprio veículo.
   Veja a licença (sem garantia).
 
-## Instalação
+## Primeiros passos
+
+### O que você precisa
+- **Para só experimentar:** Python 3.10 ou mais novo. Nenhum carro, nenhum adaptador.
+- **Para ler um carro:** um adaptador **J2534** (testado: GODIAG GD101) com o driver instalado, e o carro
+  com a ignição ligada. Drivers como o do GODIAG usam DLL de **32 bits** (`GODIAG_PT32.dll`), então use
+  Python de **32 bits** no modo hardware. ELM327 também é aceito, mas nunca foi testado em carro real.
+
+### 1. Experimente sem carro (modo simulado)
+No Windows (PowerShell), na pasta do projeto:
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-python -m pip install -e .
+.\.venv\Scripts\python.exe -m pip install -e .
+.\.venv\Scripts\python.exe -m openscan_obd.cli dashboard
 ```
 
-Se o PowerShell recusar o `Activate.ps1`, chame direto
-`.\.venv\Scripts\python.exe -m openscan_obd.cli --help`.
+Abra http://127.0.0.1:8000. Você verá o dashboard com dados gravados de exemplo.
+(Se o PowerShell recusar `Activate.ps1`, não ative o ambiente: chame o `python.exe` do `.venv` direto, como acima.)
 
-Drivers J2534 como o do GODIAG costumam ter DLL de **32 bits** (`GODIAG_PT32.dll`):
-use Python de 32 bits para o modo hardware. O modo mock não precisa de nada disso.
+### 2. Com o carro (Windows, atalhos de dois cliques)
+Todos os `.bat` criam o ambiente Python (`.venv`) sozinhos na primeira vez. Se o seu driver não for o do
+GODIAG, edite o caminho da DLL no `.bat` (ou passe `--dll "C:\caminho\driver.dll"` nos comandos abaixo).
+Carro **parado**, ignição ligada ou motor em P com freio de mão.
 
-## Uso rápido
+| Quero… | Dê dois cliques em |
+|---|---|
+| Ver o dashboard ao vivo (grava uma captura em `logs/`) | `dashboard_carro.bat` |
+| Ler os códigos de falha de todos os módulos (não apaga nada) | `ler_erros.bat` |
+| Testar se o adaptador está funcionando | `testar_adaptador.bat` |
+| Coletar dados em campo, passo a passo, com instruções na tela | `roteiro_guiado.bat` e `roteiro_guiado_andando.bat` |
+| Gerar um relatório das capturas que você fez | `analisar_log.bat` |
 
-```powershell
-# perfis disponíveis e o quanto cada um foi validado
-python -m openscan_obd.cli profiles
+Os outros `roteiro_*.bat` são etapas de pesquisa avançada; comece pelos de cima.
+Os arquivos gerados ficam em `logs/`, que o git ignora porque pode conter o VIN do seu carro.
 
-# dashboard offline (mock, sem carro) em http://127.0.0.1:8000
-python -m openscan_obd.cli dashboard
+### 3. Linha de comando (Linux, macOS ou se preferir)
 
-# dashboard com o carro (padrão: perfil genérico, só OBD-II)
-python -m openscan_obd.cli dashboard --hardware --dll "C:\caminho\driver.dll"
-
-# com um perfil específico
-python -m openscan_obd.cli dashboard --hardware --dll "C:\caminho\driver.dll" `
-  --profile nissan-sentra-b16-2010
-
-# conferir o adaptador sem carro
-python -m openscan_obd.cli j2534-check --dll "C:\caminho\driver.dll"
+```bash
+python -m venv .venv && . .venv/bin/activate
+pip install -e .
+python -m openscan_obd.cli profiles                      # perfis e o quanto cada um foi validado
+python -m openscan_obd.cli dashboard                     # simulado
+python -m openscan_obd.cli dashboard --hardware --dll /caminho/driver.dll --profile nissan-sentra-b16-2010
+python -m openscan_obd.cli ler-erros --dll /caminho/driver.dll
+python -m openscan_obd.cli j2534-check --dll /caminho/driver.dll   # conferir o adaptador sem carro
 ```
 
-Por padrão o dashboard escuta só em `127.0.0.1`. Use `--host 0.0.0.0` apenas em rede confiável.
+Sem `--profile`, o dashboard usa o perfil genérico (só OBD-II padrão, funciona em qualquer carro que fale
+SAE J1979). Por padrão ele escuta só em `127.0.0.1`; use `--host 0.0.0.0` apenas em rede confiável.
+
+### Problemas comuns
+- **"Nao consegui criar o ambiente"**: instale o Python 3.10+ (32 bits) em python.org, marque *Add to PATH*.
+- **Dashboard abre mas sem dados / "KWP indisponível"**: confira o caminho da DLL, se o Python é de 32 bits
+  e se **nenhum outro programa** está usando o adaptador (feche outros dashboards e softwares do fabricante).
+- **Adaptador travou depois de uma varredura**: tire e ponha o cabo USB. Nunca varra os IDs 0x600–0x6FF.
+- **Um valor aparece como "indisponível"**: o módulo não fornece aquele dado neste carro. Isso é esperado, não é erro.
+- **Selos nos valores**: `padrão` (OBD-II SAE J1979), `confirmado` (validado no carro de teste),
+  `estimado` (sem referência independente), `cru` (byte sem interpretação), `indisponível`.
 
 ### Comandos de pesquisa (carro parado, ignição ligada)
 
@@ -110,18 +133,27 @@ carros são muito bem-vindas, inclusive as que mostram que algo **não** funcion
 
 ## Testes
 
-```powershell
-python -m pytest tests --ignore=tests/browser      # offline, sem carro
-python -m pip install -e . -r requirements-browser.txt
-python -m playwright install chromium
-python -m unittest discover -s tests/browser -v     # navegador (Python 64 bits)
+```bash
+pip install -e . pytest
+python -m pytest tests --ignore=tests/browser          # offline, sem carro (a suíte principal)
 ```
+
+Os testes de tela (`tests/browser`) usam um navegador real e são opcionais:
+
+```bash
+pip install -r requirements-browser.txt                # instala o Playwright
+python -m playwright install chromium                  # baixa o navegador na versão certa
+python -m pytest tests/browser
+```
+
+Sem esses dois passos os testes de navegador falham no setup; os demais não dependem deles.
+A integração contínua (GitHub Actions) roda os dois grupos a cada push.
 
 ## Limitações conhecidas
 
 - ABS, airbag e A/C do Sentra de teste não responderam em 0x700–0x7FF.
-- DTCs do câmbio/ECM (`17 FF 00`) decodificados, mas bytes de status e significado não validados.
-- Fórmulas do câmbio (ATF, lock-up) são estimativas; teste em movimento ainda pendente.
+- DTCs do câmbio e demais módulos (`17 FF 00`): os códigos conferiram com o scanner de uma oficina, mas o byte de status ainda não tem significado confirmado.
+- Temperatura do ATF é estimada por tabela do manual, sem referência independente; lock-up é byte cru; relação e pressão de linha não têm decodificação validada.
 - ELM327 nunca foi testado com hardware real.
 - `scan-22` ainda não foi rodado no carro.
 
