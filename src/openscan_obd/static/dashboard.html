@@ -13,10 +13,10 @@
       background: var(--bg); color: var(--ink);
     }
     * { box-sizing: border-box; }
-    body { max-width: 1040px; margin: 0 auto; padding: 18px 20px 40px; font-variant-numeric: tabular-nums; }
+    body { max-width: 1280px; margin: 0 auto; padding: 12px 20px 16px; font-variant-numeric: tabular-nums; }
     h1 { margin: 0; font-size: 1.2rem; font-weight: 600; letter-spacing: .02em; }
     h2.group { margin: 26px 0 4px; font-size: .8rem; font-weight: 600; color: var(--mute); letter-spacing: .06em; text-transform: uppercase; }
-    header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
     .brand { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
     #connection { color: var(--mute); font-size: .88rem; margin-top: 6px; }
     #connection::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; background: var(--warn); }
@@ -33,7 +33,7 @@
     button:disabled { opacity: .5; cursor: default; }
     :focus-visible { outline: 3px solid var(--live); outline-offset: 2px; }
     [hidden] { display: none !important; }
-    main { margin-top: 14px; }
+    main { margin-top: 10px; }
 
     .meta { color: var(--mute); font-size: .88rem; line-height: 1.5; max-width: 78ch; margin: 6px 0; }
     .notice { border-left: 3px solid var(--warn); background: var(--panel); padding: 9px 14px; font-size: .9rem; line-height: 1.5; max-width: 78ch; border-radius: 0 8px 8px 0; }
@@ -54,10 +54,10 @@
 
     /* Destaque: RPM e velocidade */
     .hero { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
-    .hero .card { background: var(--panel); border-radius: 12px; padding: 16px 20px 14px; min-height: 12rem; }
-    .hero .value { display: block; font-size: clamp(3rem, 9vw, 5.5rem); line-height: 1; font-weight: 600; margin-top: 6px; white-space: nowrap; }
+    .hero .card { background: var(--panel); border-radius: 12px; padding: 12px 18px 10px; min-height: 10.5rem; }
+    .hero .value { display: block; font-size: clamp(2.8rem, 11vh, 5rem); line-height: 1; font-weight: 600; margin-top: 4px; white-space: nowrap; }
     .hero .unit { font-size: 1.05rem; }
-    .tach { height: 12px; margin-top: 14px; background: var(--line); border-radius: 2px;
+    .tach { height: 10px; margin-top: 10px; background: var(--line); border-radius: 2px;
             -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 10px, transparent 10px 13px);
             mask-image: repeating-linear-gradient(90deg, #000 0 10px, transparent 10px 13px); }
     #tach-fill { height: 100%; width: 0; background: var(--live); }
@@ -74,6 +74,14 @@
     .why { display: block; margin-top: 2px; font-size: .74rem; color: var(--mute); }
     .hero .label { color: var(--mute); }
     .card.stale { opacity: .4; }
+
+    /* Geral: tudo numa tela — 15 valores em 3 linhas de 5 */
+    .tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 10px; }
+    .tiles .card { background: var(--panel); border-radius: 10px; padding: 9px 12px 8px; display: flex; flex-direction: column; min-width: 0; }
+    .tiles .label { font-size: .8rem; color: var(--mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tiles .tier { margin-left: 6px; }
+    .tiles .value { font-size: clamp(1.3rem, 4.2vh, 1.9rem); font-weight: 600; line-height: 1.15; margin-top: 2px; }
+    .tiles .why { margin-top: 1px; font-size: .68rem; min-height: 1em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     /* CVT */
     .gate { display: flex; gap: 8px; margin: 14px 0 8px; }
@@ -96,15 +104,17 @@
     .chip { background: var(--raise); border-radius: 999px; padding: 3px 12px; font-size: .88rem; font-weight: 400; }
 
     /* Rodapé */
-    footer { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--line); }
+    footer { margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
     .legend { display: flex; gap: 6px 18px; flex-wrap: wrap; color: var(--mute); font-size: .8rem; }
     .legend .tier { margin: 0; }
-    details { margin-top: 12px; color: var(--mute); font-size: .85rem; }
+    details { margin-top: 6px; color: var(--mute); font-size: .85rem; }
     summary { cursor: pointer; width: fit-content; }
     details p { margin: 8px 0; max-width: 78ch; line-height: 1.5; }
     pre { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--panel); padding: 12px; border-radius: 8px; margin: 6px 0; }
+    @media (max-width: 1000px) { .tiles { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 720px) {
       .hero, .rows, .cvt-grid { grid-template-columns: 1fr; }
+      .tiles { grid-template-columns: repeat(2, 1fr); }
     }
 </style>
 </head>
@@ -134,26 +144,22 @@
           <span class="why" id="why-rpm"></span></article>
         <article class="card" id="card-speed"><span class="label">Velocidade<span class="tier" id="tier-speed"></span></span><span class="value"><span id="speed">—</span> <span class="unit">km/h</span></span><span class="why" id="why-speed"></span></article>
       </div>
-      <h2 class="group">Motor e ar</h2>
-      <div class="rows">
-        <article class="card" id="card-coolant"><span class="label">Temperatura do líquido<span class="tier" id="tier-coolant"></span></span><span class="value"><span id="coolant">—</span> <span class="unit">°C</span></span><span class="why" id="why-coolant"></span></article>
+      <div class="tiles">
+        <article class="card" id="card-coolant"><span class="label">Líquido de arrefecimento<span class="tier" id="tier-coolant"></span></span><span class="value"><span id="coolant">—</span> <span class="unit">°C</span></span><span class="why" id="why-coolant"></span></article>
+        <article class="card" id="card-iat"><span class="label">Ar de admissão<span class="tier" id="tier-iat"></span></span><span class="value"><span id="iat">—</span> <span class="unit">°C</span></span><span class="why" id="why-iat"></span></article>
+        <article class="card" id="card-ambient"><span class="label">Ambiente<span class="tier" id="tier-ambient"></span></span><span class="value"><span id="ambient">—</span> <span class="unit">°C</span></span><span class="why" id="why-ambient"></span></article>
+        <article class="card" id="card-runtime"><span class="label">Desde a partida<span class="tier" id="tier-runtime"></span></span><span class="value"><span id="runtime">—</span> <span class="unit">s</span></span><span class="why" id="why-runtime"></span></article>
+        <article class="card" id="card-vbat"><span class="label">Tensão do módulo<span class="tier" id="tier-vbat"></span></span><span class="value"><span id="vbat">—</span> <span class="unit">V</span></span><span class="why" id="why-vbat"></span></article>
         <article class="card" id="card-throttle"><span class="label">Acelerador<span class="tier" id="tier-throttle"></span></span><span class="value"><span id="throttle">—</span> <span class="unit">%</span></span><span class="why" id="why-throttle"></span></article>
-        <article class="card" id="card-iat"><span class="label">Temperatura do ar<span class="tier" id="tier-iat"></span></span><span class="value"><span id="iat">—</span> <span class="unit">°C</span></span><span class="why" id="why-iat"></span></article>
+        <article class="card" id="card-tps-cmd"><span class="label">Borboleta comandada<span class="tier" id="tier-tps-cmd"></span></span><span class="value"><span id="tps-cmd">—</span> <span class="unit">%</span></span><span class="why" id="why-tps-cmd"></span></article>
         <article class="card" id="card-load"><span class="label">Carga do motor<span class="tier" id="tier-load"></span></span><span class="value"><span id="load">—</span> <span class="unit">%</span></span><span class="why" id="why-load"></span></article>
         <article class="card" id="card-maf"><span class="label">Fluxo de ar (MAF)<span class="tier" id="tier-maf"></span></span><span class="value"><span id="maf">—</span> <span class="unit">g/s</span></span><span class="why" id="why-maf"></span></article>
         <article class="card" id="card-ign-adv"><span class="label">Avanço de ignição<span class="tier" id="tier-ign-adv"></span></span><span class="value"><span id="ign-adv">—</span> <span class="unit">°</span></span><span class="why" id="why-ign-adv"></span></article>
-        <article class="card" id="card-tps-cmd"><span class="label">Borboleta comandada<span class="tier" id="tier-tps-cmd"></span></span><span class="value"><span id="tps-cmd">—</span> <span class="unit">%</span></span><span class="why" id="why-tps-cmd"></span></article>
-        <article class="card" id="card-ambient"><span class="label">Temperatura ambiente<span class="tier" id="tier-ambient"></span></span><span class="value"><span id="ambient">—</span> <span class="unit">°C</span></span><span class="why" id="why-ambient"></span></article>
-        <article class="card" id="card-runtime"><span class="label">Tempo desde a partida<span class="tier" id="tier-runtime"></span></span><span class="value"><span id="runtime">—</span> <span class="unit">s</span></span><span class="why" id="why-runtime"></span></article>
-      </div>
-      <h2 class="group">Mistura e elétrica</h2>
-      <div class="rows">
         <article class="card" id="card-o2s1"><span class="label">O2 upstream (B1S1)<span class="tier" id="tier-o2s1"></span></span><span class="value"><span id="o2s1">—</span> <span class="unit">V</span></span><span class="why" id="why-o2s1"></span></article>
         <article class="card" id="card-stft"><span class="label">STFT<span class="tier" id="tier-stft"></span></span><span class="value"><span id="stft">—</span> <span class="unit">%</span></span><span class="why" id="why-stft"></span></article>
         <article class="card" id="card-ltft"><span class="label">LTFT<span class="tier" id="tier-ltft"></span></span><span class="value"><span id="ltft">—</span> <span class="unit">%</span></span><span class="why" id="why-ltft"></span></article>
-        <article class="card" id="card-inj-pw"><span class="label">Pulso de injeção<span class="tier" id="tier-inj-pw"></span></span><span class="value"><span id="inj-pw">—</span> <span class="unit">ms</span></span><span class="why" id="why-inj-pw"></span></article>
-        <article class="card" id="card-vbat"><span class="label">Tensão do módulo<span class="tier" id="tier-vbat"></span></span><span class="value"><span id="vbat">—</span> <span class="unit">V</span></span><span class="why" id="why-vbat"></span></article>
         <article class="card" id="card-lambda"><span class="label">Lambda comandado<span class="tier" id="tier-lambda"></span></span><span class="value"><span id="lambda">—</span> <span class="unit">λ</span></span><span class="why" id="why-lambda"></span></article>
+        <article class="card" id="card-inj-pw"><span class="label">Pulso de injeção<span class="tier" id="tier-inj-pw"></span></span><span class="value"><span id="inj-pw">—</span> <span class="unit">ms</span></span><span class="why" id="why-inj-pw"></span></article>
       </div>
     </section>
 
