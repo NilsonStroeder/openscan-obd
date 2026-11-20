@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "ts": 1794847312.282145,
+  "data_source": "j2534",
+  "note": "Resultados crus; nada foi interpretado nem validado no veículo.",
+  "H1": {
+    "tcm": {
+      "03": {
+        "request": "03",
+        "response": "7f0311",
+        "status": "nrc",
+        "nrc": "11"
+      },
+      "07": {
+        "request": "07",
+        "response": "7f0711",
+        "status": "nrc",
+        "nrc": "11"
+      },
+      "0A": {
+        "request": "0a",
+        "response": "7f0a11",
+        "status": "nrc",
+        "nrc": "11"
+      }
+    }
+  },
+  "H2": {
+    "03": {
+      "rx_7E8": {
+        "request": "03",
+        "response": "4300",
+        "status": "ok"
+      },
+      "rx_7E9": {
+        "request": "03",
+        "response": "4300",
+        "status": "ok"
+      }
+    },
+    "07": {
+      "rx_7E8": {
+        "request": "07",
+        "response": "4700",
+        "status": "ok"
+      },
+      "rx_7E9": {
+        "request": "07",
+        "response": "4700",
+        "status": "ok"
+      }
+    },
+    "0A": {
+      "rx_7E8": {
+        "request": "0a",
+        "status": "error",
+        "error": "J2534Error: ERR_TIMEOUT"
+      },
+      "rx_7E9": {
+        "request": "0a",
+        "status": "error",
+        "error": "J2534Error: ERR_TIMEOUT"
+      }
+    }
+  },
+  "H3": {
+    "ecm": {
+      "session": {
+        "request": "10c0",
+        "response": "50c0",
+        "status": "ok"
+      },
+      "requests": {
+        "13": {
+          "request": "13",
+          "response": "7f1311",
+          "status": "nrc",
+          "nrc": "11"
+        },
+        "13ff00": {
+          "request": "13ff00",
+          "response": "7f1311",
+          "status": "nrc",
+          "nrc": "11"
+        },
+        "17": {
+          "request": "17",
+          "response": "7f1712",
+          "status": "nrc",
+          "nrc": "12"
+        },
+        "17ff00": {
+          "request": "17ff00",
+          "response": "7f1712",
+          "status": "nrc",
+          "nrc": "12"
+        }
+      }
+    },
+    "tcm": {
+      "session": {
+        "request": "10c0",
+        "response": "50c0",
+        "status": "ok"
+      },
+      "requests": {
+        "13": {
+          "request": "13",
+          "response": "7f1311",
+          "status": "nrc",
+          "nrc": "11"
+        },
+        "13ff00": {
+          "request": "13ff00",
+          "response": "7f1311",
+          "status": "nrc",
+          "nrc": "11"
+        },
+        "17": {
+          "request": "17",
+          "response": "7f1712",
+          "status": "nrc",
+          "nrc": "12"
+        },
+        "17ff00": {
+          "request": "17ff00",
+          "response": "57030725f1d000a71722f1",
+          "status": "ok"
+        }
+      }
+    }
+  },
+  "H5": {
+    "status": "skipped",
+    "reason": "A3 só roda com --allow-a3."
+  }
+}

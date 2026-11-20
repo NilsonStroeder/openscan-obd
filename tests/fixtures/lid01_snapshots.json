@@ -1,0 +1,17 @@
+{
+  "_note": "Snapshots reais do TCM CVT (Sentra B16 2010), LID 0x01, 69 bytes (byte[0]=eco do LID). Veiculo em P, motor quente. rpm_motor_referencia vem do rotulo/anotacao do snapshot; origem da medida a confirmar.",
+  "snapshots": {
+    "marcha_lenta": {
+      "timestamp": "2026-10-23T16:41:29.063537",
+      "hex": "010000010001163a007cb200080202167feb0000000000010101037e25008324c82d2dd84226fefefe027802a0026d027602a0026d001100000001000a111203000600005f",
+      "rpm_motor_referencia": 700,
+      "selector": "P"
+    },
+    "acelerado": {
+      "timestamp": "2026-10-23T16:41:52.759931",
+      "hex": "0100000100015d46007bb1000802025d7feb0017171718020102048433008326c82d2dd86d328282fe0278022e02500279022e0250001000000001000a111203000700005f",
+      "rpm_motor_referencia": 3000,
+      "selector": "P"
+    }
+  }
+}

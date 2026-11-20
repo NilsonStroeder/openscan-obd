@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+*.egg-info/
+# Capturas reais do carro: ficam só na sua máquina (podem conter VIN/dados pessoais).
+logs/*
+!logs/.gitkeep

@@ -1,0 +1,248 @@
+{
+  "schema": 1,
+  "ts": 1794853601.4122667,
+  "data_source": "j2534",
+  "tx_range": [
+    "0x700",
+    "0x7FF"
+  ],
+  "rx_offsets": [
+    "+0x10",
+    "+0x08"
+  ],
+  "note": "Resposta crua; lista de DTC vazia não prova ausência de falhas. Nada foi interpretado nem validado no veículo.",
+  "found": [
+    {
+      "tx": "0x71E",
+      "rx": "0x72E",
+      "offset": "+0x10",
+      "session": {
+        "request": "10c0",
+        "response": "50c0",
+        "status": "ok"
+      },
+      "note": "Resposta crua; lista de DTC vazia não prova ausência de falhas. Nada foi interpretado nem validado no veículo.",
+      "requests": {
+        "3e": {
+          "request": "3e",
+          "response": "7e",
+          "status": "ok"
+        },
+        "1a80": {
+          "request": "1a80",
+          "response": "7f1a11",
+          "status": "nrc",
+          "nrc": "11"
+        },
+        "17ff00": {
+          "request": "17ff00",
+          "response": "5700",
+          "status": "ok"
+        },
+        "13ff00": {
+          "request": "13ff00",
+          "response": "7f1311",
+          "status": "nrc",
+          "nrc": "11"
+        },
+        "2101": {
+          "request": "2101",
+          "response": "6101840f2401c0001a40017400e000004224",
+          "status": "ok"
+        },
+        "0100": {
+          "request": "0100",
+          "response": "7f0111",
+          "status": "nrc",
+          "nrc": "11"
+        }
+      }
+    },
+    {
+      "tx": "0x7D0",
+      "rx": "0x7E0",
+      "offset": "+0x10",
+      "session": {
+        "request": "10c0",
+        "response": "50c0",
+        "status": "ok"
+      },
+      "note": "Resposta crua; lista de DTC vazia não prova ausência de falhas. Nada foi interpretado nem validado no veículo.",
+      "requests": {
+        "3e": {
+          "request": "3e",
+          "response": "7e",
+          "status": "ok"
+        },
+        "1a80": {
+          "request": "1a80",
+          "status": "error",
+          "error": "J2534Error: ERR_TIMEOUT"
+        },
+        "17ff00": {
+          "request": "17ff00",
+          "response": "5701d00180",
+          "status": "ok"
+        },
+        "13ff00": {
+          "request": "13ff00",
+          "status": "error",
+          "error": "J2534Error: ERR_TIMEOUT"
+        },
+        "2101": {
+          "request": "2101",
+          "response": "6101001b0000",
+          "status": "ok"
+        },
+        "0100": {
+          "request": "0100",
+          "response": "4100be1fb813",
+          "status": "ok"
+        }
+      }
+    },
+    {
+      "tx": "0x7DF",
+      "rx": "0x7EF",
+      "offset": "+0x10",
+      "session": {
+        "request": "10c0",
+        "response": "50c0",
+        "status": "ok"
+      },
+      "note": "Resposta crua; lista de DTC vazia não prova ausência de falhas. Nada foi interpretado nem validado no veículo.",
+      "requests": {
+        "3e": {
+          "request": "3e",
+          "response": "7e",
+          "status": "ok"
+        },
+        "1a80": {
+          "request": "1a80",
+          "status": "error",
+          "error": "J2534Error: ERR_TIMEOUT"
+        },
+        "17ff00": {
+          "request": "17ff00",
+          "response": "5701d00180",
+          "status": "ok"
+        },
+        "13ff00": {
+          "request": "13ff00",
+          "status": "error",
+          "error": "J2534Error: ERR_TIMEOUT"
+        },
+        "2101": {
+          "request": "2101",
+          "response": "6101001b0000",
+          "status": "ok"
+        },
+        "0100": {
+          "request": "0100",
+          "response": "4100be1fb813",
+          "status": "ok"
+        }
+      }
+    },
+    {
+      "tx": "0x7E0",
+      "rx": "0x7F0",
+      "offset": "+0x10",
+      "session": {
+        "request": "10c0",
+        "response": "50c0",
+        "status": "ok"
+      },
+      "note": "Resposta crua; lista de DTC vazia não prova ausência de falhas. Nada foi interpretado nem validado no veículo.",
+      "requests": {
+        "3e": {
+          "request": "3e",
+          "response": "7e",
+          "status": "ok"
+        },
+        "1a80": {
+          "request": "1a80",
+          "response": "7f1a11",
+          "status": "nrc",
+          "nrc": "11"
+        },
+        "17ff00": {
+          "request": "17ff00",
+          "response": "5701d00180",
+          "status": "ok"
+        },
+        "13ff00": {
+          "request": "13ff00",
+          "response": "7f1311",
+          "status": "nrc",
+          "nrc": "11"
+        },
+        "2101": {
+          "request": "2101",
+          "response": "6101001b0000",
+          "status": "ok"
+        },
+        "0100": {
+          "request": "0100",
+          "response": "4100be1fb813",
+          "status": "ok"
+        }
+      }
+    },
+    {
+      "tx": "0x7E1",
+      "rx": "0x7E9",
+      "offset": "+0x08",
+      "session": {
+        "request": "10c0",
+        "response": "50c0",
+        "status": "ok"
+      },
+      "note": "Resposta crua; lista de DTC vazia não prova ausência de falhas. Nada foi interpretado nem validado no veículo.",
+      "requests": {
+        "3e": {
+          "request": "3e",
+          "response": "7f3e12",
+          "status": "nrc",
+          "nrc": "12"
+        },
+        "1a80": {
+          "request": "1a80",
+          "response": "7f1a11",
+          "status": "nrc",
+          "nrc": "11"
+        },
+        "17ff00": {
+          "request": "17ff00",
+          "response": "57030725f1d000a71722f1",
+          "status": "ok"
+        },
+        "13ff00": {
+          "request": "13ff00",
+          "response": "7f1311",
+          "status": "nrc",
+          "nrc": "11"
+        },
+        "2101": {
+          "request": "2101",
+          "response": "610100000100010019007d990008020200b4eb00000000001901193e4000008224ca2d2dd83120fefefe0278032003200279031f0320001100000001000a111203000600005f",
+          "status": "ok"
+        },
+        "0100": {
+          "request": "0100",
+          "response": "7f0111",
+          "status": "nrc",
+          "nrc": "11"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "tested_tx": 256,
+    "found": 5,
+    "interrupted": false,
+    "errors": 0,
+    "aborted": false,
+    "abort_reason": null
+  }
+}

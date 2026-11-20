@@ -1,0 +1,367 @@
+{
+  "schema": 1,
+  "ts": 1794847150.7344832,
+  "data_source": "j2534",
+  "catalog_note": "Catálogo de módulos Nissan do veículo de teste (Sentra B16 2010); não é descoberta universal de ECUs.",
+  "modules": {
+    "engine": {
+      "tx": "0x7E0",
+      "rx": "0x7E8",
+      "note": "Motor/ECM - CONFIRMADO (tambem aceita KWP 10 C0; LID 0x01 = 4 bytes)",
+      "present": true,
+      "status": "ok",
+      "response": "7e"
+    },
+    "tcm_cvt": {
+      "tx": "0x7E1",
+      "rx": "0x7E9",
+      "note": "CVT/TCM - CONFIRMADO (0x21 responde sob sessao 0xC0; sob 0x81 -> NRC 0x80)",
+      "present": true,
+      "status": "ok",
+      "response": "7e"
+    },
+    "eps": {
+      "tx": "0x742",
+      "rx": "0x762",
+      "note": "Direcao EPS - CONFIRMADO (discover)",
+      "present": false,
+      "status": "error"
+    },
+    "meter": {
+      "tx": "0x743",
+      "rx": "0x763",
+      "note": "Painel/Combination Meter - CONFIRMADO (discover)",
+      "present": false,
+      "status": "error"
+    },
+    "bcm": {
+      "tx": "0x745",
+      "rx": "0x765",
+      "note": "BCM - CONFIRMADO (discover)",
+      "present": false,
+      "status": "error"
+    },
+    "ipdm": {
+      "tx": "0x74D",
+      "rx": "0x76D",
+      "note": "IPDM - CONFIRMADO (discover)",
+      "present": true,
+      "status": "nrc",
+      "response": "7f3e80"
+    },
+    "unk_71e": {
+      "tx": "0x71E",
+      "rx": "0x72E",
+      "note": "Modulo 0x71E - responde 10 C0; identidade NAO confirmada (ABS/VDC?)",
+      "present": false,
+      "status": "error"
+    },
+    "abs_vdc": {
+      "tx": "0x740",
+      "rx": "0x760",
+      "note": "ABS/VDC - NAO respondeu neste par (ver unk_71e)",
+      "present": false,
+      "status": "error"
+    },
+    "airbag": {
+      "tx": "0x752",
+      "rx": "0x772",
+      "note": "SRS/Airbag - NAO respondeu neste par",
+      "present": false,
+      "status": "error"
+    },
+    "hvac": {
+      "tx": "0x744",
+      "rx": "0x764",
+      "note": "HVAC - NAO respondeu neste par",
+      "present": false,
+      "status": "error"
+    }
+  },
+  "ecm": {
+    "supported_pids": [
+      1,
+      3,
+      4,
+      5,
+      6,
+      7,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      19,
+      20,
+      21,
+      28,
+      31,
+      33,
+      46,
+      48,
+      49,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      76
+    ],
+    "live": {
+      "load": {
+        "value": 20.392156862745097,
+        "unit": "%",
+        "name": "Carga do motor (calc.)",
+        "raw": "410434",
+        "pid": "04"
+      },
+      "ect": {
+        "value": 93,
+        "unit": "C",
+        "name": "Temp. liquido arref.",
+        "raw": "410585",
+        "pid": "05"
+      },
+      "stft": {
+        "value": 0.78125,
+        "unit": "%",
+        "name": "Ajuste combustivel curto prazo B1",
+        "raw": "410681",
+        "pid": "06"
+      },
+      "ltft": {
+        "value": 20.3125,
+        "unit": "%",
+        "name": "Ajuste combustivel longo prazo B1",
+        "raw": "41079a",
+        "pid": "07"
+      },
+      "rpm": {
+        "value": 690.75,
+        "unit": "rpm",
+        "name": "RPM",
+        "raw": "410c0acb",
+        "pid": "0C"
+      },
+      "vsp": {
+        "value": 0,
+        "unit": "km/h",
+        "name": "Velocidade",
+        "raw": "410d00",
+        "pid": "0D"
+      },
+      "timing": {
+        "value": 10.5,
+        "unit": "°",
+        "name": "Avanco de ignicao",
+        "raw": "410e95",
+        "pid": "0E"
+      },
+      "iat": {
+        "value": 40,
+        "unit": "C",
+        "name": "Temp. ar admissao",
+        "raw": "410f50",
+        "pid": "0F"
+      },
+      "maf": {
+        "value": 2.38,
+        "unit": "g/s",
+        "name": "Fluxo de ar (MAF)",
+        "raw": "411000ee",
+        "pid": "10"
+      },
+      "tps": {
+        "value": 12.156862745098039,
+        "unit": "%",
+        "name": "Posicao borboleta",
+        "raw": "41111f",
+        "pid": "11"
+      },
+      "o2_b1s1": {
+        "value": 0.7,
+        "unit": "V",
+        "name": "Sonda O2 B1S1 (tensao)",
+        "raw": "41148c81",
+        "pid": "14"
+      },
+      "o2_b1s2": {
+        "value": 0.66,
+        "unit": "V",
+        "name": "Sonda O2 B1S2 (tensao)",
+        "raw": "411584ff",
+        "pid": "15"
+      },
+      "runtime": {
+        "value": 1275,
+        "unit": "s",
+        "name": "Tempo desde a partida",
+        "raw": "411f04fb",
+        "pid": "1F"
+      },
+      "vbat": {
+        "value": 14.159,
+        "unit": "V",
+        "name": "Tensao do modulo",
+        "raw": "4142374f",
+        "pid": "42"
+      },
+      "abs_load": {
+        "value": 17.254901960784313,
+        "unit": "%",
+        "name": "Carga absoluta",
+        "raw": "4143002c",
+        "pid": "43"
+      },
+      "lambda_cmd": {
+        "value": 1.0,
+        "unit": "λ",
+        "name": "Lambda comandado",
+        "raw": "41448000",
+        "pid": "44"
+      },
+      "ambient": {
+        "value": 27,
+        "unit": "C",
+        "name": "Temp. ambiente",
+        "raw": "414643",
+        "pid": "46"
+      },
+      "tps_cmd": {
+        "value": 3.1372549019607843,
+        "unit": "%",
+        "name": "Borboleta comandada",
+        "raw": "414c08",
+        "pid": "4C"
+      }
+    },
+    "dtcs": {
+      "raw": {
+        "03": "4300",
+        "07": "4700"
+      },
+      "stored": [],
+      "pending": []
+    },
+    "dtcs_permanent_0a": {
+      "request": "0a",
+      "status": "error",
+      "error": "J2534Error: ERR_TIMEOUT"
+    },
+    "mode09_supported": [
+      4,
+      6
+    ],
+    "vin": {
+      "status": "nao_suportado",
+      "reason": "bitmap 09 00 não declara o PID 02"
+    },
+    "cal_id": {
+      "request": "0904",
+      "response": "490402315a4a39364200000000000000000000324e324c303000000000000000000000",
+      "status": "ok"
+    },
+    "cvn": {
+      "request": "0906",
+      "response": "4906028914f5bc000004bb",
+      "status": "ok"
+    }
+  },
+  "tcm": {
+    "status": "ok",
+    "session": {
+      "request": "10c0",
+      "response": "50c0",
+      "status": "ok"
+    },
+    "lid01": {
+      "status": "ok",
+      "request": "2101",
+      "raw": "010000010001153a0096b200080202157feb0000000000010101057d26006824c82d2dd84226fefefe027802a0026f027702a10271001100000001000a111203000600005f",
+      "decoded": {
+        "ENG_SPEED_rpm": 679.2,
+        "VSP_b3": 1,
+        "VSP_b4": 0,
+        "REV_b40": "NOT_REVERSE",
+        "gear": "P",
+        "gear_raw": "0x11",
+        "atf_temp_c_estimated": 50.2,
+        "b30": 104,
+        "b9": 150,
+        "b38_lockup_raw": "0xFE",
+        "b54": 17,
+        "raw_hex": "010000010001153a0096b200080202157feb0000000000010101057d26006824c82d2dd84226fefefe027802a0026f027702a10271001100000001000a111203000600005f"
+      }
+    },
+    "ident": {
+      "80": {
+        "request": "1a80",
+        "response": "7f1a11",
+        "status": "nrc",
+        "nrc": "11"
+      },
+      "82": {
+        "request": "1a82",
+        "response": "7f1a11",
+        "status": "nrc",
+        "nrc": "11"
+      },
+      "83": {
+        "request": "1a83",
+        "response": "7f1a11",
+        "status": "nrc",
+        "nrc": "11"
+      }
+    },
+    "dtc": {
+      "status": "nao_validado",
+      "reason": "leitura de DTC do TCM ainda não validada no carro (KWP 18 recusado; OBD 03/07 no TCM em teste). Não interpretar resposta vazia como 'sem falhas'.",
+      "attempts": {
+        "03": {
+          "request": "03",
+          "response": "7f0311",
+          "status": "nrc",
+          "nrc": "11"
+        },
+        "07": {
+          "request": "07",
+          "response": "7f0711",
+          "status": "nrc",
+          "nrc": "11"
+        },
+        "0A": {
+          "request": "0a",
+          "response": "7f0a11",
+          "status": "nrc",
+          "nrc": "11"
+        }
+      }
+    }
+  },
+  "others": {
+    "ipdm": {
+      "ident_1a80": {
+        "request": "1a80",
+        "response": "7f1a11",
+        "status": "nrc",
+        "nrc": "11"
+      }
+    }
+  },
+  "summary": {
+    "modules_present": [
+      "engine",
+      "tcm_cvt",
+      "ipdm"
+    ],
+    "ecm_pids_supported": 28,
+    "dtc_ecm": {
+      "stored": [],
+      "pending": []
+    },
+    "dtc_cvt": "nao_validado",
+    "vin": "nao_suportado"
+  }
+}

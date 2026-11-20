@@ -1,0 +1,103 @@
+{
+  "_note": "Capturas reais do LID 0x01 do TCM (Sentra B16 2010, JF011E/RE0F10A), via field-test, 2026-10-23 20:16-20:31, extraidas do log do terminal. 69 bytes cada (byte[0]=eco do LID). Os rotulos de rpm/velocidade sao os alvos do roteiro de teste, nao medidas independentes (OBD nao foi gravado junto).",
+  "captures": [
+    {
+      "label": "frio_manha",
+      "scenario": "frio",
+      "timestamp": "2026-10-23T20:16:57",
+      "hex": "010000010001001900af9c0008020200b4eb0000000000170117384000005024ca2d2dd83124fefefe000003200320000703200320001100000001000a111203000600005f",
+      "condition": "motor desligado (3 rpm)"
+    },
+    {
+      "label": "seletor_P",
+      "scenario": "P",
+      "timestamp": "2026-10-23T20:17:40",
+      "hex": "010000010001273b00aeb500080202277feb0000000000010101078127005024c82d2dd84227fefefe000002a00271000702a00270001100000001000a111203000700005f",
+      "condition": "P parado"
+    },
+    {
+      "label": "seletor_N",
+      "scenario": "N",
+      "timestamp": "2026-10-23T20:17:53",
+      "hex": "010000010001273c00adb500080202277feb0000000000010101078127005124c82d2dd84227fefefe000002a00271000702a00272034100000004000a111203000700005f",
+      "condition": "N parado"
+    },
+    {
+      "label": "seletor_D",
+      "scenario": "D",
+      "timestamp": "2026-10-23T20:18:07",
+      "hex": "0100000100011f5200acb500080202207feb0000000000060606128042005323c82d2dd84f42fefefe010a027a022d010b027a022d1f8900000008000a000200000700005f",
+      "condition": "D parado"
+    },
+    {
+      "label": "seletor_R",
+      "scenario": "R",
+      "timestamp": "2026-10-23T20:18:24",
+      "hex": "0100000100011a4c00a9b7000802021a7feb0000000000050505107e3a005524c82d2dd8473bfefe5a010a0290023d010b028f023c092900000002000a020204000700005f",
+      "condition": "R parado"
+    },
+    {
+      "label": "rpm1000_P",
+      "scenario": "rpm1000",
+      "timestamp": "2026-10-23T20:18:43",
+      "hex": "010000010001253c00a7b500080202257feb0000000000010101068127005724c82d2dd84227fefefe027802a00271027a02a00271001100000001000a111203000700005f",
+      "condition": "P, motor ~1000 rpm"
+    },
+    {
+      "label": "rpm2000_P",
+      "scenario": "rpm2000",
+      "timestamp": "2026-10-23T20:19:29",
+      "hex": "010000010001394700a3b600080202397feb000d0d0505020102068235005c24c82d2dd84134fefefe027802a3024e02770267024c001100000001000a111203000700005f",
+      "condition": "P, motor ~2000 rpm"
+    },
+    {
+      "label": "accel25_D",
+      "scenario": "accel25",
+      "timestamp": "2026-10-23T20:19:49",
+      "hex": "0100000100012e4e00a1b6000802022e7feb0000000000000000f9813d005d24c82d2dd8493cfefefe0278028a02390277028a0239034900000004000a111203000700005f",
+      "condition": "D, acelerador ~25%"
+    },
+    {
+      "label": "accel50_D",
+      "scenario": "accel50",
+      "timestamp": "2026-10-23T20:20:12",
+      "hex": "010000010001575f009fb400080202567feb0000000000fcfbfced8451005f24c82d2dd865558181fe027802430200027702410200034900000004000a111203000700005f",
+      "condition": "D, acelerador ~50%"
+    },
+    {
+      "label": "arranque_1",
+      "scenario": "arranque",
+      "timestamp": "2026-10-23T20:20:38",
+      "hex": "0100000100011a4b009db500080202197feb00000000000303030a7e3b006123c82d2dd86d3afe6ffe0226022e023b0227022f023b1f8900000008000a101200000500005f",
+      "condition": "arranque suave em D (1a captura)"
+    },
+    {
+      "label": "arranque_2",
+      "scenario": "arranque",
+      "timestamp": "2026-10-23T20:20:50",
+      "hex": "01000003030b2a6b009db403080b022a7fd6011414141508080814715e006226c82d2dd8725cfefefe010a022301ed0109022201ea1f8000000008000a000200000700005f",
+      "condition": "arranque suave em D (2a captura, ja em movimento)"
+    },
+    {
+      "label": "cruising_60",
+      "scenario": "cruising60",
+      "timestamp": "2026-10-23T20:30:16",
+      "hex": "01000038392b2b270086b338392b292b0334001d1e1d1e05080609400e00782b34baba05360efecefe01c902c802bf01c902c802bf1f80000000080006000200000700005f",
+      "condition": "cruzeiro ~60 km/h (valor de rotulo)"
+    },
+    {
+      "label": "cruising_80",
+      "scenario": "cruising80",
+      "timestamp": "2026-10-23T20:30:47",
+      "hex": "0100004d4d3030260083b34d4d303830ff2a00272727290a080a0d400e007b302acaca32430efeb7fe0257029d02bf0257029d02bd1f80000000080006000200000700005f",
+      "condition": "cruzeiro ~80 km/h (valor de rotulo)"
+    },
+    {
+      "label": "tcc_80kmh",
+      "scenario": "tcc",
+      "timestamp": "2026-10-23T20:31:02",
+      "hex": "0100004d4d2e2d330082b44d4d2e382de2290000000000000000f2401c007d2d29ccccd84222feb4fe010a02a002830109029d02841f89000000080009000200000700005f",
+      "condition": "tentativa de lock-up ~80 km/h (lock-up nao confirmado)"
+    }
+  ]
+}
