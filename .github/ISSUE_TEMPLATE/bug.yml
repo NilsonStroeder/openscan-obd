@@ -1,0 +1,33 @@
+name: Relatar um problema
+description: Algo não funcionou (dashboard, leitura de erros, adaptador, instalação)
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Nunca teste algo novo com o carro em movimento. Antes de anexar logs, leia docs/compartilhar-logs.md (remova o VIN)."
+  - type: input
+    id: carro
+    attributes:
+      label: Carro
+      description: Marca, modelo, ano, motor e câmbio
+    validations:
+      required: true
+  - type: input
+    id: adaptador
+    attributes:
+      label: Adaptador e driver
+      description: Ex. GODIAG GD101 com GODIAG_PT32.dll, ou ELM327
+    validations:
+      required: true
+  - type: textarea
+    id: o-que
+    attributes:
+      label: O que você fez e o que aconteceu
+      description: Comando ou .bat executado, a saída e o que você esperava ver. O carro estava parado, com a ignição ligada?
+    validations:
+      required: true
+  - type: input
+    id: versao
+    attributes:
+      label: Sistema e versão do Python
+      description: Ex. Windows 11, Python 3.12 (32 bits)

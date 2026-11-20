@@ -26,7 +26,7 @@ Escreva o teste antes (TDD), rode a suíte inteira e só então abra o PR. Texto
 ## Enviando logs de outro carro
 
 Antes de anexar qualquer arquivo de `logs/`: remova **VIN** (texto e hex), placas, caminhos do seu
-computador e qualquer dado pessoal. Prefira anexar só o trecho relevante. Veja `docs/exemplos/`.
+computador e qualquer dado pessoal. Prefira anexar só o trecho relevante. Guia completo: [`docs/compartilhar-logs.md`](docs/compartilhar-logs.md). Exemplos: `docs/exemplos/`.
 Para adicionar um veículo, leia [`docs/adicionar-veiculo.md`](docs/adicionar-veiculo.md).
 
 ## Reportando problemas

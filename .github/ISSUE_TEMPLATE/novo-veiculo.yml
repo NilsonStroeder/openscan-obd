@@ -1,0 +1,30 @@
+name: Resultado em outro veículo
+description: Funcionou (ou não) no seu carro. Os dois resultados ajudam
+labels: ["veiculo"]
+body:
+  - type: input
+    id: carro
+    attributes:
+      label: Carro (marca, modelo, ano, motor, câmbio)
+    validations:
+      required: true
+  - type: input
+    id: adaptador
+    attributes:
+      label: Adaptador e driver
+    validations:
+      required: true
+  - type: dropdown
+    id: perfil
+    attributes:
+      label: Perfil usado
+      options: ["generic-obd2", "nissan-sentra-b16-2010", "outro"]
+    validations:
+      required: true
+  - type: textarea
+    id: resultado
+    attributes:
+      label: O que respondeu e o que não respondeu
+      description: Módulos que apareceram no scan, valores que bateram com o painel, códigos de falha lidos. Anexe só trechos de log sem VIN.
+    validations:
+      required: true
